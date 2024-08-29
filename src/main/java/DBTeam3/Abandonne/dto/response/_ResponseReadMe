@@ -1,0 +1,49 @@
+Api로 특정 객체를 요청했을 때 보내기 위한 객체들
+
+
+UserAllResponse: User 프로필, 포트폴리오, 커리어를 모두 합해서 전달
+{
+    String
+        fname,  lname, email, instrument, phone_no
+
+    User_Portfolio
+        userPortfolio
+
+    List<User_Career>
+        userCareers
+}
+
+
+UserCareerResponse : 특정 커리어 정보 반환.
+{
+    long cid, uid, pid
+    String position, organization
+    LocalDate startDate
+    LocalDate endDate : 객체 없을 경우 null값
+
+    UserCareerResponse(User_Career) : User_Career -> UserCareerResponse
+    toEntity() : UserCareerResponse -> User_Career
+}
+
+
+
+UserPortfolioResponse : 유저 포트폴리오 정보 반환
+{
+    long uid
+    String about_me
+    int level : unused
+
+    toEntity() : UserPortfolioResponse -> User_Portfolio
+}
+
+UserResponse : 유저의 가입 시 정보 반환 (유저 프로필)
+{
+    Long id
+    String fname, lname, email
+    LocalDate bdate
+    char gender {M, F}
+    String instrument, phone_no, pw
+
+    UserResponse(User_Info) : User -> UserResponse
+    toEntity() : UserResponse -> User_Info
+}

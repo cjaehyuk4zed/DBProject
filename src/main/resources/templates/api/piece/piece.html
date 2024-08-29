@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piece Information</title>
+</head>
+<body>
+
+<div id="pieceInfoContainer">
+    <!-- 값이 표시될 곳 -->
+</div>
+
+<script>
+    // 백엔드에서 전송된 JSON 데이터 (임시로 하드코딩)
+    const pieceList = {
+        "pieceName": "곡 이름",
+        "composerName": "작곡가 이름"
+    };
+
+    // HTML에 값을 표시하는 함수
+    function displayPieceInfo(pieceList) {
+        const pieceInfoContainer = document.getElementById('pieceInfoContainer');
+
+        // HTML에 값 추가
+        pieceInfoContainer.innerHTML = `
+            <h1>Piece Information</h1>
+            <p><strong>Piece Name:</strong> ${pieceList.pieceName}</p>
+            <p><strong>Composer Name:</strong> ${pieceList.composerName}</p>
+        `;
+    }
+
+    // 페이지 로드 시 호출
+    document.addEventListener('DOMContentLoaded', function() {
+        // 백엔드에서 받은 JSON 데이터로 HTML 업데이트
+        displayPieceInfo(pieceList);
+    });
+</script>
+
+</body>
+</html>

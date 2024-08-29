@@ -1,0 +1,296 @@
+<!--이메일 주소 : cjaehyukzed@gmail.com-->
+<!--비밀 번호 : 1234 -->
+<!--위 아이디로 로그인 해서 사이트 접속 가능-->
+<!--혹은 DB에 저장된 다른 이메일/비번으로 접속 가능-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- 구글 material-icons -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+
+    <!-- 페이지 타이틀  -->
+    <title> Abandonne </title>
+</head>
+
+<style>
+    .main_body {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+        background-color: #FAFAFA;
+        min-height: auto;
+    }
+
+    .left_body {
+
+        background-color: #e9ebee;
+        margin-right: 100px;
+        width: 500px;
+        height: 2000px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right_body {
+
+        background-color: #fff8e7;
+        padding-top: 20px;
+        width: 300px;
+        height: 1000px;
+        left: 72%;
+        position: fixed
+    }
+
+    .feed_box {
+        background-color: white;
+        width: 480px;
+        margin: 10px;
+        min-height: auto;
+        padding-bottom: 10px;
+    }
+
+    .feed_img {
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .feed_content {
+        padding: 0px 10px;
+    }
+
+    .feed_like {
+        padding: 0px 10px;
+    }
+
+    .feed_reply {
+        padding: 0px 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .feed_txt {
+        font-size: 14px;
+    }
+
+
+    .feed_icon {
+        padding: 5px 5px 0px 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    span {
+        padding-right: 5px;
+    }
+
+    .feed_name {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .feed_name_txt {
+        font-size: 14px;
+        padding: 10px 10px;
+        font-weight: bold;
+        width: 130px;
+    }
+
+    .profile_box {
+        width: 50px;
+        height: 50px;
+        border-radius: 70%;
+        overflow: hidden;
+    }
+
+    .profile_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .name_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .name_content_txt {
+        font-size: 12px;
+        padding: 0px 0px 0px 10px;
+        font-weight: bold;
+        color: darkgray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 130px;
+    }
+
+    .big_profile_box {
+        width: 60px;
+        height: 60px;
+        border-radius: 70%;
+        overflow: hidden;
+    }
+
+    .link_txt {
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        overflow: clip;
+        text-decoration: none;
+    }
+
+    .recommend_box {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        align-items: center;
+    }
+
+    .comment_box {
+        margin: 40px 0 0 5px;
+        font-size: 12px;
+        font-weight: bold;
+        color: lightgray;
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>
+
+<body>
+
+<!-- 상단 내비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom"
+     style="width: 100%;height: 50px;position: fixed;">
+    <div class="container">
+        <!-- edit -->
+        <img style="height: 30px; object-fit: contain" src="/abandonne.jpg" alt="Logo Here">
+        <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search">
+        <div>
+            <!-- 상단 바 아이콘 바꾸기 -->
+            <span class="material-icons">home</span>
+            <span class="material-icons">send</span>
+            <span class="material-icons-outlined">add_box</span>
+            <span class="material-icons-outlined">turned_in_not</span>
+        </div>
+    </div>
+</nav>
+
+<!-- 바디 영역 -->
+<form id="userInfo" name="userInfo" th:object="${userInfo}">
+    <div class="main_body">
+        <div class="left_body">
+            <!-- edit -->
+            <div>
+                <a style="padding: 60px 10px;font-weight: bold; text-decoration: none; font-size: 20px">
+                    추천 공연 정보
+                </a>
+            </div>
+            <!--추천 공연 정보 개수만큼 띄우기, thymeleaf for loop-->
+            <div class="border feed_box" th:each="concertInfo : ${suggestedConcert}">
+                <div class="feed_name">
+                    <div class="profile_box">
+                        <!-- 콘서트 사진 -->
+                        <img class="profile_img" th:src="@{'/concert/Concert_'+${concertInfo.getCid()}+'.jpg'}"
+                             alt="PFP Here">
+                    </div>
+                    <!-- 콘서트 이름 -->
+                    <a><span class="feed_name_txt" th:text="${concertInfo.getConcertName()}"></span></a>
+                </div>
+                <!-- 공연 포스터 -->
+                <img class="feed_img" th:src="@{'/concert/Concert_' + ${concertInfo.getCid()} +'.jpg'}"
+                     alt="Feed Image Here">
+                <div class="feed_icon">
+                    <div>
+                        <a class="link_txt" style="color: black; font-size:13px; padding-left: 10px;" ;
+                           th:href="@{'/dborch/concert/' + ${concertInfo.getCid()}}">See More Info</a>
+                    </div>
+                    <div>
+                        <span class="material-icons-outlined">
+                        turned_in_not
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- edit -->
+        <!-- close -->
+        <!-- Add text at the end here ? -->
+        <div class="right_body">
+            <!-- 우측 상단 사용자 프로필 -->
+            <div class="feed_name" style="justify-content: space-between">
+                <div style="display: flex; align-items: center; ">
+                    <div class="big_profile_box">
+                        <img class="profile_img"
+                             th:src="@{'/pfp/User_'+${userInfo.getUid()} + '.jpg'}">
+                    </div>
+                    <div class="name_content">
+                        <!-- 회원 이름 -->
+                        <a><span class="feed_name_txt" th:text="${userInfo.getFullName()}"></span></a>
+                        <!-- 회원 악기 -->
+                        <span class="name_content_txt" th:text="${userInfo.getInstrument()}"></span>
+                    </div>
+                </div>
+                <!--여기 버튼을 누르면 로그인 된 사용자의 프로필 페이지로 -->
+                <input type="hidden" id="uid" name="uid" th:value="${userInfo.getUid()}">
+                <div style="display: flex; flex-direction: column">
+                    <a class="link_txt"
+                       th:href="@{'/dborch/user/' + ${userInfo.getUid()} + '/profile'}">|프로필|</a>
+                    <a class="link_txt"
+                       th:href="@{'/dborch/user/' + ${userInfo.getUid()} + '/career'}">|커리어|</a>
+                </div>
+            </div>
+
+            <div class="recommend_box">
+                <span style="color: rgb(128,128,128)"> 회원님을 위한 추천</span>
+                <span style="font-size: 12px"> 모두 보기 </span>
+            </div>
+            <!-- 회원님에게 추천 사용자 -->
+            <!-- 사용자 추천 목록, thymeleaf for loop-->
+            <div>
+                <div class="feed_name" style="justify-content: space-between" th:each="user : ${userSuggestions}">
+                    <div style="display: flex; align-items: center; ">
+                        <div class="profile_box">
+                            <img class="profile_img"
+                                 th:src="@{'/pfp/User_'+${user.getId()} + '.jpg'}" alt=" ">
+                        </div>
+                        <div class="name_content">
+                            <a><span class="feed_name_txt"
+                                     th:text="@{${user.getFname()} + ' ' + ${user.getLname()}}"></span></a>
+                            <span class="name_content_txt" th:text="${user.getInstrument()}"></span>
+                        </div>
+                        <div style="display: flex; flex-direction: column">
+                            <a class="link_txt" style="padding-left: 47px"
+                               th:href="@{'/dborch/user/' + ${user.getId()} + '/info'}">|프로필|</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- Option: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>

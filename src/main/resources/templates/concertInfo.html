@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Google Material Icons -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+
+    <title> userCareer </title>
+</head>
+
+<style>
+    .main_body {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+        min-height: auto;
+        background-color: #fff8e7;
+    }
+
+    .left_body {
+        margin-right: 100px;
+        width: 500px;
+        min-height: auto;
+        flex-direction: column;
+    }
+
+    .feed_box {
+        background-color: white;
+        width: 480px;
+        margin: 10px;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        padding-bottom: 10px;
+    }
+
+    .feed_txt {
+        font-size: 14px;
+    }
+
+    .feed_img {
+        width: 100%;
+        object-fit: contain;
+    }
+
+    span {
+        padding-right: 5px;
+    }
+
+    .feed_name {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .feed_name_txt {
+        font-size: 14px;
+        padding: 0px 10px;
+        font-weight: bold;
+    }
+
+    .feed_header_txt {
+        font-size: 30px;
+        padding: 0px 10px;
+        font-weight: bold;
+    }
+
+    .career {
+        font-size: 14px;
+        padding: 0px 10px;
+        font-weight: bold;
+    }
+
+    .profile_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile_box {
+        width: 40px;
+        height: 40px;
+        border-radius: 70%;
+        overflow: hidden;
+    }
+
+    .name_content_txt {
+        font-size: 12px;
+        padding: 0px 0px 0px 10px;
+        font-weight: bold;
+        color: darkgray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 130px;
+    }
+
+    .link_txt {
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        overflow: clip;
+        text-decoration: none;
+    }
+
+</style>
+
+<body>
+<!-- 상단 내비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom"
+     style="width: 100%;height: 50px;position: fixed;">
+    <div class="container">
+        <span class="feed_header_txt"> 공연 정보 </span>
+        <div>
+<!--            <a class="link_txt" th:href="@{'/dborch/main/user/' + ${userInfo.getUid()}}">홈 화면</a>-->
+            <a><span class="material-icons">home</span></a>
+        </div>
+    </div>
+</nav>
+
+<!-- 바디 영역 -->
+<div class="main_body">
+    <div class="left_body">
+        <div class="border feed_box">
+            <div class="feed_name">
+                <!-- 사용자 이름, 악기 -->
+<!--<img class="feed_img" th:src="@{'/concert/Concert_' + ${concertInfo.getConce}" alt="Feed Image Here">-->
+                <img class="feed_img" th:src="@{'/concert/Concert_' + ${concertInfo.getCid()} + '.jpg'}" alt="Feed Image Here">
+            </div>
+        </div>
+        <div class="border feed_box">
+
+            <!--메인 정보 부분-->
+            <div class="career">
+                <p class="feed_txt"><b>Concert : </b><span th:text="${concertInfo.getConcertName()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Hall : </b><span th:text="${concertInfo.getHallName()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Location : </b><span th:text="@{${concertInfo.getHallAddress()} + ', ' + ${concertInfo.getCity()}}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Date : </b><span th:text="${concertInfo.getDate()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Ticket Price : </b><span th:text="@{${concertInfo.getPrice()} + '원'}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

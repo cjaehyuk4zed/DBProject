@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Google Material Icons -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+
+    <title> userCareer </title>
+</head>
+
+<style>
+    .main_body {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+        min-height: auto;
+        background-color: #fff8e7;
+    }
+
+    .left_body {
+        margin-right: 100px;
+        width: 500px;
+        min-height: auto;
+        flex-direction: column;
+    }
+
+    .feed_box {
+        background-color: white;
+        width: 480px;
+        margin: 10px;
+        min-height: auto;
+        padding-bottom: 10px;
+    }
+
+    .feed_txt {
+        font-size: 14px;
+    }
+
+    span {
+        padding-right: 5px;
+    }
+
+    .feed_name {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .feed_name_txt {
+        font-size: 14px;
+        padding: 0px 10px;
+        font-weight: bold;
+    }
+
+    .feed_header_txt {
+        font-size: 30px;
+        padding: 0px 10px;
+        font-weight: bold;
+    }
+
+    .career {
+        font-size: 14px;
+        padding: 0px 10px;
+        font-weight: bold;
+    }
+
+    .profile_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile_box {
+        width: 40px;
+        height: 40px;
+        border-radius: 70%;
+        overflow: hidden;
+    }
+
+    .name_content_txt {
+        font-size: 12px;
+        padding: 0px 0px 0px 10px;
+        font-weight: bold;
+        color: darkgray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 130px;
+    }
+
+    .link_txt {
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        overflow: clip;
+        text-decoration: none;
+    }
+
+</style>
+
+<body>
+<!-- 상단 내비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom"
+     style="width: 100%;height: 50px;position: fixed;">
+    <div class="container">
+        <span class="feed_header_txt"> 커리어 페이지 </span>
+        <div>
+            <a class="link_txt" th:href="@{'/dborch/main/user/' + ${userInfo.getUid()}}">홈 화면</a>
+            <a><span class="material-icons">home</span></a>
+        </div>
+    </div>
+</nav>
+
+<!-- 바디 영역 -->
+<div class="main_body">
+    <div class="left_body">
+        <div class="border feed_box">
+            <div class="feed_name">
+                <div class="profile_box">
+                    <!-- 사용자 프로필 사진 -->
+                    <img class="profile_img" th:src="@{'/pfp/User_'+${userInfo.getUid()} + '.jpg'}" alt="PFP Here">
+                </div>
+                <!-- 사용자 이름, 악기 -->
+                <a><span class="feed_name_txt" th:text="${userInfo.getFullName()}"></span></a>
+                <br>
+                <a><span class="name_content_txt" th:text="${userInfo.getInstrument()}"></span></a>
+            </div>
+        </div>
+        <div class="border feed_box">
+
+            <!--메인 정보 부분-->
+            <div class="career">
+                <p class="feed_txt"><b>성 : </b><span th:text="${userInfo.getLname()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>이름 : </b><span th:text="${userInfo.getFname()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>이메일 : </b><span th:text="${userInfo.getEmail()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>성별 : </b><span th:text="${userInfo.getGender()}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>전화번호 : </b><span th:text="${userInfo.getPhone_no()}"></span></p>
+            </div>
+        </div>
+        <div class="border feed_box" th:each="career : ${careerList}">
+
+            <!--메인 정보 부분-->
+            <div class="career">
+                <p class="feed_txt"><b>Position : </b><span th:text="${career.position}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Organization : </b><span th:text="${career.organization}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Piece : </b><span th:text="${career.pieceName}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Composer : </b><span th:text="${career.composerName}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>Start Date : </b><span th:text="${career.startDate}"></span></p>
+            </div>
+            <div class="career">
+                <p class="feed_txt"><b>End Date : </b><span th:text="${career.endDate}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

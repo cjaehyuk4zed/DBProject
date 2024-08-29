@@ -1,0 +1,35 @@
+server:
+  port: 8080
+spring:
+#  security:
+#    user:
+#      name: user
+#      password: 1234
+#      roles: ADMIN
+#  cors:
+#    allowed-origins:
+#      - "http://localhost:8080"
+#      - "http://localhost:8080/**"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: Heej!N0320
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  thymeleaf:
+    cache: false
+    check-template-location : false
+    prefix: classpath:/templates/
+    suffix: .html
+    dialects:
+      enabled: true
+      dialect:
+        org.hibernate.dialect.MySQL5InnoDBDialect : true
+        org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect: true
+
+
+    defer-datasource-initialization: true

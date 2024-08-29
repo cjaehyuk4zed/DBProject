@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <title>login page</title>
+</head>
+<style>
+    .floating_form {
+        margin: 0px 30px;
+    }
+
+    .floating_label {
+        margin-top: -4px;
+        font-size: 14px;
+    }
+
+    .floating_input {
+        height: 50px !important;
+        padding-top: 20px !important;
+        font-size: 14px !important;
+    }
+
+</style>
+<body style="background-color: #FAFAFA;height: 100%">
+<form id="userForm" name="userForm" th:object="${userForm}" onsubmit="submitForm(event)">
+    <div style="font-size: 14px;text-align: center;width: 100%;min-height: 100vh;display: flex; flex-direction: row; align-items: center; justify-content: center">
+        <div>
+            <div class="mb-3"
+                 style="background-color: white; width: 350px; height: 480px; border: 1px solid rgba(0, 0, 0, 0.18);">
+                <div style="display: flex;align-items: center;justify-content: center">
+                    <!-- 로고 Logo -->
+                    <img style="height: 50px; object-fit: contain; margin: 30px 0" src="/abandonne.jpg" alt="Logo Here">
+                </div>
+                <!-- 이메일 / 성 / 이름 / 악기 / 전화 번호 / 비밀 번호 -->
+                <div class="form-floating mb-2 floating_form">
+                    <input type="text" id="email" name="email" th:field="${userForm.email}"
+                           class="floating_input form-control"
+                           placeholder="name@example.com">
+                    <label for="email" class="floating_label">이메일 주소</label>
+                </div>
+                <div class="form-floating mb-2 floating_form">
+                    <input type="text" id="lname" name="lname" th:field="${userForm.lname}"
+                           class="floating_input form-control" placeholder="gong">
+                    <label for="lname" class="floating_label">성</label>
+                </div>
+                <div class="form-floating mb-2 floating_form">
+                    <input type="text" id="fname" name="fname" th:field="${userForm.fname}"
+                           class="floating_input form-control"
+                           placeholder="jong hyuk">
+                    <label for="fname" class="floating_label">이름</label>
+                </div>
+                <div class="form-floating mb-2 floating_form">
+                    <input type="text" id="instrument" name="instrument" th:field="${userForm.instrument}"
+                           class="floating_input form-control"
+                           placeholder="Violin">
+                    <label for="instrument" class="floating_label">악기</label>
+                </div>
+                <div class="form-floating mb-2 floating_form">
+                    <input type="text" id="phone_no" name="phone_no" th:field="${userForm.phone_no}"
+                           class="floating_input form-control"
+                           placeholder="01012341234">
+                    <label for="phone_no" class="floating_label">전화 번호</label>
+                </div>
+                <div class="form-floating mb-3 floating_form">
+                    <input type="text" id="pw" name="pw" th:field="${userForm.pw}"
+                           class="floating_input form-control" placeholder="Password">
+                    <label for="pw" class="floating_label">비밀 번호</label>
+                </div>
+                <div class="floating_form mb-3">
+                    <button type="submit" class="btn btn-primary" style="width: 100%"> 가입</button>
+                </div>
+            </div>
+            <div style="background-color: white; width: 350px; height: 70px; border: 1px solid rgba(0, 0, 0, 0.18);">
+                <div style="margin-top: 25px">
+                    <!-- 로그인 페이지로 redirect -->
+                    계정이 있으신가요? <a href="/dborch/user/login"
+                                  style="font-weight: bold; color: cornflowerblue;text-decoration: none; cursor: pointer">
+                    로그인 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="response"></div>
+
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+        const form = {
+            fname: document.getElementById("fname").value,
+            lname: document.getElementById("lname").value,
+            email: document.getElementById("email").value,
+            instrument: document.getElementById("instrument").value,
+            phone_no: document.getElementById("phone_no").value,
+            pw: document.getElementById("pw").value
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/user/new", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    alert("User created successfully, Go to Login Page");
+                    const queryUrl = "/dborch/user/login"
+                    window.location.href = queryUrl;
+                } else {
+                    alert(xhr.statusText);
+                    alert("Already Registered User!");
+                    document.getElementById("response").innerHTML = xhr.responseText;
+                }
+            }
+        };
+        xhr.send(JSON.stringify(form));
+    }
+</script>
+
+<!-- Option : Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>
